@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.tamir.mymessagesapp.dummy.DummyContent
+import com.tamir.mymessagesapp.dummy.Message
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.Button
@@ -26,6 +26,7 @@ class MessagesFragment : Fragment() {
     // TODO: Customize parameters
     private var columnCount = 1
 
+    private var userName:String = ""
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var windowManager: WindowManager
 
@@ -33,19 +34,19 @@ class MessagesFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+            userName = it.getString(userNameKey)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_messages_list, container, false)
-        val recycler = view.findViewById<RecyclerView>(R.id.messages_fragment_list)
+        val mRootView = inflater.inflate(R.layout.fragment_messages_list, container, false)
+        val recycler = mRootView.findViewById<RecyclerView>(R.id.messages_fragment_list)
         val metrics = DisplayMetrics()
         val display = windowManager.defaultDisplay
         display.getMetrics(metrics)
-        val messageBox = view.findViewById<EditText>(R.id.message_list_fragment_editText_message_box)
-        val sendButton = view.findViewById<Button>(R.id.messages_fragment_send_button)
+        val messageBox = mRootView.findViewById<EditText>(R.id.message_list_fragment_editText_message_box)
+        val sendButton = mRootView.findViewById<Button>(R.id.messages_fragment_send_button)
 //        messageBox.layoutParams.width = metrics.widthPixels - sendButton.width
 //        recycler.layoutParams.height = metrics.heightPixels;
 
@@ -56,10 +57,14 @@ class MessagesFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MymessagesRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                adapter = MymessagesRecyclerViewAdapter(Message.ITEMS, listener)
             }
         }
-        return view
+        val sendMessageButton = mRootView.findViewById(R.id.messages_fragment_send_button) as Button
+        sendMessageButton.setOnClickListener {
+
+        }
+        return mRootView
     }
 
     override fun onAttach(context: Context) {
@@ -93,16 +98,15 @@ class MessagesFragment : Fragment() {
 
     companion object {
 
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
+        const val userNameKey = "userName"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(userName: String):MessagesFragment =
                 MessagesFragment().apply {
                     arguments = Bundle().apply {
-                        putInt(ARG_COLUMN_COUNT, columnCount)
+                        putString("userName", userName)
                     }
                 }
+
     }
 }

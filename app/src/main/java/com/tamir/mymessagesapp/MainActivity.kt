@@ -3,6 +3,7 @@ package com.tamir.mymessagesapp
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity(),
         MainFragment.OnFragmentInteractionListener,

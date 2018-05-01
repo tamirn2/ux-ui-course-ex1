@@ -1,7 +1,6 @@
 package com.tamir.mymessagesapp
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +21,7 @@ import android.widget.EditText
 class MainFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private var editUsernameBox: EditText?=null
-    private var messagesButton: Button?=null
+    private var enterAppButton: Button?=null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -34,8 +33,8 @@ class MainFragment : Fragment() {
         // Inflate the layout for this fragment
         var mRootView = inflater.inflate(R.layout.fragment_main, container, false)
         editUsernameBox = mRootView.findViewById(R.id.editUsernameBox) as EditText
-        messagesButton = mRootView.findViewById(R.id.enter_app_button) as Button
-        messagesButton!!.setOnClickListener{
+        enterAppButton = mRootView.findViewById(R.id.enter_app_button) as Button
+        enterAppButton!!.setOnClickListener{
             var username = editUsernameBox.toString()
             if (!username.isBlank()) {
                 listener!!.onListFragmentInteraction(username)
