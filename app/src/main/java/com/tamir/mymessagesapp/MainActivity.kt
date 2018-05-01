@@ -4,10 +4,12 @@ import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
-class MainActivity : MainFragment.OnFragmentInteractionListener,
-                     AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+        MainFragment.OnFragmentInteractionListener,
+        MessagesFragment.OnListFragmentInteractionListener {
     override fun onListFragmentInteraction(username: String)
     {
+
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.activity_main_frame_layout, MessagesFragment())

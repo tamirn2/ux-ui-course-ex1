@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.tamir.mymessagesapp.MessagesFragment"
+
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".MessagesFragment"
-    tools:listitem="@layout/fragment_messages" />
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/messages_fragment_send_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Send"
+        />
+
+    <EditText
+        android:id="@+id/message_list_fragment_editText_message_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name please"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/messages_fragment_send_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messages_fragment_list" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_fragment_list"
+        android:name="com.tamir.mymessagesapp.MessagesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/messages_fragment_send_button"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MessagesFragment"
+        tools:listitem="@layout/fragment_messages" />
+
+
+</android.support.constraint.ConstraintLayout>

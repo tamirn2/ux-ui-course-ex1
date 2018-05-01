@@ -11,7 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.tamir.mymessagesapp.dummy.DummyContent
-import com.tamir.mymessagesapp.dummy.DummyContent.DummyItem
+import android.util.DisplayMetrics
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+
 
 /**
  * A fragment representing a list of Items.
@@ -19,11 +23,11 @@ import com.tamir.mymessagesapp.dummy.DummyContent.DummyItem
  * [MessagesFragment.OnListFragmentInteractionListener] interface.
  */
 class MessagesFragment : Fragment() {
-
     // TODO: Customize parameters
     private var columnCount = 1
 
     private var listener: OnListFragmentInteractionListener? = null
+    private lateinit var windowManager: WindowManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +40,18 @@ class MessagesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_messages_list, container, false)
+        val recycler = view.findViewById<RecyclerView>(R.id.messages_fragment_list)
+        val metrics = DisplayMetrics()
+        val display = windowManager.defaultDisplay
+        display.getMetrics(metrics)
+        val messageBox = view.findViewById<EditText>(R.id.message_list_fragment_editText_message_box)
+        val sendButton = view.findViewById<Button>(R.id.messages_fragment_send_button)
+//        messageBox.layoutParams.width = metrics.widthPixels - sendButton.width
+//        recycler.layoutParams.height = metrics.heightPixels;
 
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
+        if (recycler is RecyclerView) {
+            with(recycler) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
@@ -52,6 +64,8 @@ class MessagesFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
         if (context is OnListFragmentInteractionListener) {
             listener = context
         } else {
@@ -75,10 +89,7 @@ class MessagesFragment : Fragment() {
      * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
      * for more information.
      */
-    interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
-    }
+    interface OnListFragmentInteractionListener {}
 
     companion object {
 

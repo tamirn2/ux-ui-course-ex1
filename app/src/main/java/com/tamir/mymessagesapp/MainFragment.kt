@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 
 /**
  * A simple [Fragment] subclass.
@@ -19,6 +21,8 @@ import android.view.ViewGroup
  */
 class MainFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
+    private var editUsernameBox: EditText?=null
+    private var messagesButton: Button?=null
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -29,6 +33,14 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var mRootView = inflater.inflate(R.layout.fragment_main, container, false)
+        editUsernameBox = mRootView.findViewById(R.id.editUsernameBox) as EditText
+        messagesButton = mRootView.findViewById(R.id.enter_app_button) as Button
+        messagesButton!!.setOnClickListener{
+            var username = editUsernameBox.toString()
+            if (!username.isBlank()) {
+                listener!!.onListFragmentInteraction(username)
+            }
+        }
 
         return mRootView
     }
@@ -40,6 +52,8 @@ class MainFragment : Fragment() {
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
+
+
     }
 
     override fun onDetach() {
