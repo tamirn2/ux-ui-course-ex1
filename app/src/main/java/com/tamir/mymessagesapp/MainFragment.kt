@@ -20,7 +20,7 @@ import android.widget.EditText
  */
 class MainFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    private var editUsernameBox: EditText?=null
+//    private var editUsernameBox: EditText?=null
     private var enterAppButton: Button?=null
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -32,10 +32,10 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var mRootView = inflater.inflate(R.layout.fragment_main, container, false)
-        editUsernameBox = mRootView.findViewById(R.id.editUsernameBox) as EditText
+        var editUsernameBox = mRootView.findViewById(R.id.editUsernameBox) as EditText
         enterAppButton = mRootView.findViewById(R.id.enter_app_button) as Button
         enterAppButton!!.setOnClickListener{
-            var username = editUsernameBox.toString()
+            var username = editUsernameBox.text.toString()
             if (!username.isBlank()) {
                 listener!!.onListFragmentInteraction(username)
             }

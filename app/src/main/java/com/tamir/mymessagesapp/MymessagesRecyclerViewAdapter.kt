@@ -8,7 +8,7 @@ import android.widget.TextView
 
 
 import com.tamir.mymessagesapp.MessagesFragment.OnListFragmentInteractionListener
-import com.tamir.mymessagesapp.dummy.Message.Message
+import com.tamir.mymessagesapp.message.Message
 
 import kotlinx.android.synthetic.main.fragment_messages.view.*
 
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_messages.view.*
  * TODO: Replace the implementation with code for your data type.
  */
 class MymessagesRecyclerViewAdapter(
-        private val mValues: List<Message>,
+        private val mValues: MutableList<Message>,
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MymessagesRecyclerViewAdapter.ViewHolder>() {
 
@@ -32,6 +32,11 @@ class MymessagesRecyclerViewAdapter(
         }
     }
 
+    fun addMessage(msg: Message){
+        mValues.add(msg)
+        notifyItemInserted(mValues.size)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.fragment_messages, parent, false)
@@ -40,23 +45,20 @@ class MymessagesRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
-
-        with(holder.mView) {
-            tag = item
-            setOnClickListener(mOnClickListener)
-        }
+        holder.msgTime.text = item.time
+        holder.msgContent.text = item.messageContent
+        holder.userName.text = item.userName
     }
 
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+        val userName: TextView = mView.item_user_name
+        val msgContent: TextView = mView.item_msg_content
+        val msgTime: TextView = mView.item_msg_time
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + msgContent.text + "'"
         }
     }
 }

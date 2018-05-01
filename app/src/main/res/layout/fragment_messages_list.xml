@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/messages_fragment_send_button"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messages_fragment_list" />
+         />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/messages_fragment_list"

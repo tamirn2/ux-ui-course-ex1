@@ -3,17 +3,20 @@ package com.tamir.mymessagesapp
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity(),
         MainFragment.OnFragmentInteractionListener,
         MessagesFragment.OnListFragmentInteractionListener {
+    override fun addMessage(userName: String, messageContent: String, time: String) {
+
+    }
+
     override fun onListFragmentInteraction(username: String)
     {
-
+        var messagesFragment = MessagesFragment.newInstance(username)
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.activity_main_frame_layout, MessagesFragment())
+                .replace(R.id.activity_main_frame_layout, messagesFragment)
                 .addToBackStack(null)
                 .commit()
     }
