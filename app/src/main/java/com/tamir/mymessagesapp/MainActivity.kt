@@ -8,8 +8,11 @@ class MainActivity : MainFragment.OnFragmentInteractionListener,
                      AppCompatActivity() {
     override fun onListFragmentInteraction(username: String)
     {
-
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.activity_main_frame_layout, MessagesFragment())
+                .addToBackStack(null)
+                .commit()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
