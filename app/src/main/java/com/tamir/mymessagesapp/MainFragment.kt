@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
      */
     interface OnFragmentInteractionListener
     {
-
+        fun onListFragmentInteraction(username: String)
     }
 
     companion object {
@@ -68,11 +68,7 @@ class MainFragment : Fragment() {
          *
          * @return A new instance of fragment MainFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-                MainFragment().apply {
-                    arguments = Bundle().apply {}
-                }
+        fun newInstance() = MainFragment()
     }
 }
