@@ -9,12 +9,18 @@ data class Message (val userName: String,
                     private var listener: MessagesFragment.OnListFragmentInteractionListener?)
 {
     var onClickListener : View.OnClickListener
-    init {
-        val itemNumBefore = mValues.size
+    var index: Int
 
+    init {
+        index = mValues.size
         onClickListener = View.OnClickListener {
-            val itemNum = itemNumBefore
-            listener!!.messageClicked(itemNumBefore)
+            listener!!.messageClicked(index)
+        }
+    }
+
+    fun updateListener(){
+        onClickListener = View.OnClickListener {
+            listener!!.messageClicked(index)
         }
     }
 
@@ -24,5 +30,12 @@ data class Message (val userName: String,
 
     companion object {
         val mValues = mutableListOf<Message>()
+
+        fun updeateIndecies(){
+            for (i in mValues.indices){
+                mValues[i].index = i
+                mValues[i].updateListener()
+            }
+        }
     }
 }

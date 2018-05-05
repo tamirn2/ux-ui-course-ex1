@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(),
 {
     override fun deleteMessage(index: Int) {
         Message.mValues.removeAt(index)
+        Message.updeateIndecies()
         supportFragmentManager.popBackStack()
     }
 

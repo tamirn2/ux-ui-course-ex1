@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.tamir.mymessagesapp.message.Message;
@@ -52,8 +53,18 @@ public class MessageDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View mRootView = inflater.inflate(R.layout.fragment_message_details,
                 container, false);
+
         TextView mainText = mRootView.findViewById(R.id.message_details_fragment_main_text_view);
         mainText.setText(this.mMsg.toString());
+
+        Button deleteMsgButton = mRootView.findViewById(R.id.message_details_fragment_delete_button);
+        View.OnClickListener deleteListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mListener.deleteMessage(mMsg.getIndex());
+            }
+        };
+        deleteMsgButton.setOnClickListener(deleteListener);
         return mRootView;
     }
 
