@@ -1,43 +1,28 @@
 package com.tamir.mymessagesapp.message
 
-import org.json.JSONObject
+import android.view.View
+import com.tamir.mymessagesapp.MessagesFragment
 
-data class Message (val userName: String,val messageContent: String,val time: String){
+data class Message (val userName: String,
+                    val messageContent: String,
+                    val time: String,
+                    private var listener: MessagesFragment.OnListFragmentInteractionListener?)
+{
+    var onClickListener : View.OnClickListener
+    init {
+        val itemNumBefore = mValues.size
 
-//    val ITEMS: MutableList<Message> = ArrayList()
-
-    private fun createMessageItem(userName: String, messageContent: String, time: String): Message {
-        return Message(userName, messageContent, time)
+        onClickListener = View.OnClickListener {
+            val itemNum = itemNumBefore
+            listener!!.messageClicked(itemNumBefore)
+        }
     }
 
-
-//    fun toJsonObject() : JSONObject {
-//        val output= JSONObject()
-//        output.put(KEY_NAME, userName)
-//        output.put(KEY_CONTENT, messageContent)
-//        output.put(KEY_TIME, time)
-//        return output
-//    }
-
-    /**
-     * A dummy item representing a piece of content.
-     */
-    data class Message(val userName: String, val messageContent: String, val time: String) {
-        override fun toString(): String = "$userName - $messageContent - $time"
+    override fun toString(): String {
+        return "$userName: $messageContent - $time";
     }
 
-//    companion object {
-//        val KEY_NAME = "userName"
-//        val KEY_CONTENT = "messageContent"
-//        val KEY_TIME = "time"
-//
-//        fun fromJsonObject(input: JSONObject): Message {
-//            return Message(
-//                    input.getString(KEY_NAME),
-//                    input.getString(KEY_CONTENT),
-//                    input.getString(KEY_TIME)
-//            )
-//        }
-//    }
-
+    companion object {
+        val mValues = mutableListOf<Message>()
+    }
 }

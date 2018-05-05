@@ -17,24 +17,14 @@ import kotlinx.android.synthetic.main.fragment_messages.view.*
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MymessagesRecyclerViewAdapter(
-        private val mValues: MutableList<Message>,
-        private val mListener: OnListFragmentInteractionListener?)
-    : RecyclerView.Adapter<MymessagesRecyclerViewAdapter.ViewHolder>() {
+class MyMessagesRecyclerViewAdapter
+    : RecyclerView.Adapter<MyMessagesRecyclerViewAdapter.ViewHolder>() {
 
-    private val mOnClickListener: View.OnClickListener
-
-    init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Message
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-        }
-    }
+    init { }
 
     fun addMessage(msg: Message){
-        mValues.add(msg)
-        notifyItemInserted(mValues.size)
+        Message.mValues.add(msg)
+        notifyItemInserted(Message.mValues.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,21 +34,24 @@ class MymessagesRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = mValues[position]
+        val item = Message.mValues[position]
         holder.msgTime.text = item.time
         holder.msgContent.text = item.messageContent
         holder.userName.text = item.userName
+        holder.itemView.setOnClickListener(item.onClickListener)
+
     }
 
-    override fun getItemCount(): Int = mValues.size
+    override fun getItemCount(): Int = Message.mValues.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+    inner class ViewHolder(mView: View) :
+            RecyclerView.ViewHolder(mView) {
         val userName: TextView = mView.item_user_name
         val msgContent: TextView = mView.item_msg_content
         val msgTime: TextView = mView.item_msg_time
 
         override fun toString(): String {
-            return super.toString() + " '" + msgContent.text + "'"
+            return super.toString() + " " + msgContent.text + " "
         }
     }
 }

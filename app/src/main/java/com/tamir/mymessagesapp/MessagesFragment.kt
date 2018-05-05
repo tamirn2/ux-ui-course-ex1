@@ -28,7 +28,7 @@ class MessagesFragment : Fragment() {
     private var userName:String = ""
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var windowManager: WindowManager
-    private lateinit var mAdapter: MymessagesRecyclerViewAdapter;
+    private lateinit var mAdapter: MyMessagesRecyclerViewAdapter;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,18 +43,12 @@ class MessagesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val mRootView = inflater.inflate(R.layout.fragment_messages_list, container, false)
         val recycler = mRootView.findViewById<RecyclerView>(R.id.messages_fragment_list)
-//        val metrics = DisplayMetrics()
-//        val display = windowManager.defaultDisplay
-//        display.getMetrics(metrics)
         val messageBox = mRootView.findViewById<EditText>(R.id.message_list_fragment_editText_message_box)
         val sendButton = mRootView.findViewById<Button>(R.id.messages_fragment_send_button)
-//        messageBox.layoutParams.width = metrics.widthPixels - sendButton.width
-//        recycler.layoutParams.height = metrics.heightPixels;
-        val ITEMS: MutableList<Message> = ArrayList()
 
         // Set the adapter
         if (recycler is RecyclerView) {
-            mAdapter = MymessagesRecyclerViewAdapter(ITEMS, listener)
+            mAdapter = MyMessagesRecyclerViewAdapter()
             with(recycler) {
                 adapter = mAdapter
             }
@@ -62,8 +56,9 @@ class MessagesFragment : Fragment() {
         sendButton.setOnClickListener {
             val currentDateTime = LocalDateTime.now()
             var time = currentDateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
-            mAdapter.addMessage(Message(userName, messageBox.text.toString(), time))
-//            listener?.addMessage(userName, messageBox.text.toString(), time)
+            val message = Message(userName, messageBox.text.toString(), time, listener)
+
+            mAdapter.addMessage(message)
         }
         return mRootView
     }
@@ -98,6 +93,7 @@ class MessagesFragment : Fragment() {
     interface OnListFragmentInteractionListener
     {
         fun addMessage(userName: String, messageContent: String, time: String)
+        fun messageClicked(index: Int)
     }
 
     companion object {
