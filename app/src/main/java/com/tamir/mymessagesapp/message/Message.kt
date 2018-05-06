@@ -6,6 +6,7 @@ import com.tamir.mymessagesapp.MessagesFragment
 data class Message (val userName: String,
                     val messageContent: String,
                     val time: String,
+                    val date: String,
                     private var listener: MessagesFragment.OnListFragmentInteractionListener?)
 {
     var onClickListener : View.OnClickListener
@@ -24,14 +25,19 @@ data class Message (val userName: String,
         }
     }
 
+    fun getShareString(): String
+    {
+        return "$userName: $messageContent - $time"
+    }
+
     override fun toString(): String {
-        return "$userName: $messageContent - $time";
+        return "$userName: $messageContent - $time on $date";
     }
 
     companion object {
         val mValues = mutableListOf<Message>()
 
-        fun updeateIndecies(){
+        fun upbeatIndices(){
             for (i in mValues.indices){
                 mValues[i].index = i
                 mValues[i].updateListener()

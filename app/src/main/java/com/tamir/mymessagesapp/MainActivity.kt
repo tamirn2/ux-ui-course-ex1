@@ -1,27 +1,36 @@
 package com.tamir.mymessagesapp
 
-import android.app.Fragment
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.view.View
 import com.tamir.mymessagesapp.message.Message
+import android.content.Intent
+
+
 
 class MainActivity : AppCompatActivity(),
         MainFragment.OnFragmentInteractionListener,
         MessagesFragment.OnListFragmentInteractionListener,
         MessageDetailsFragment.OnFragmentInteractionListener
 {
+    override fun shareMessage(msg: String)
+    {
+        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain";
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shared msg");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, msg);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+    }
+
     override fun deleteMessage(index: Int) {
         Message.mValues.removeAt(index)
-        Message.updeateIndecies()
+        Message.upbeatIndices()
         supportFragmentManager.popBackStack()
     }
 
     override fun messageClicked(index: Int) {
-        val mSnackBar = Snackbar.make(this.findViewById<View>(android.R.id.content), "Thanks for sharing!", 3000)
-        mSnackBar.show()
         var messageDetailsFragment = MessageDetailsFragment.newInstance(Message.mValues[index])
         supportFragmentManager
                 .beginTransaction()

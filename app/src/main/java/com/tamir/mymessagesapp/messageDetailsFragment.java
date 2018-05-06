@@ -65,6 +65,17 @@ public class MessageDetailsFragment extends Fragment {
             }
         };
         deleteMsgButton.setOnClickListener(deleteListener);
+
+        Button shareMsgButton = mRootView.findViewById(R.id.message_details_fragment_share_button);
+        View.OnClickListener shareListener = new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                mListener.shareMessage(mMsg.getShareString());
+            }
+        };
+        shareMsgButton.setOnClickListener(shareListener);
+
+
         return mRootView;
     }
 
@@ -98,5 +109,6 @@ public class MessageDetailsFragment extends Fragment {
     public interface OnFragmentInteractionListener
     {
         void deleteMessage(int index);
+        void shareMessage(String msg);
     }
 }

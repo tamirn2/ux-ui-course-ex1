@@ -56,9 +56,11 @@ class MessagesFragment : Fragment() {
         sendButton.setOnClickListener {
             val currentDateTime = LocalDateTime.now()
             var time = currentDateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT))
-            val message = Message(userName, messageBox.text.toString(), time, listener)
+            var date = currentDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE)
+            val message = Message(userName, messageBox.text.toString(), time, date, listener)
 
             mAdapter.addMessage(message)
+            messageBox.setText("")
         }
         return mRootView
     }
